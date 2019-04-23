@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <package name="action" extends="struts-default" namespace="/">
+        <interceptors>
+            <interceptor name="authority" class="org.example.interceptors.AuthorityInterceptor"></interceptor>
+        </interceptors>
+
+        <global-results>
+            <result name="sqlExcp">/loginException.jsp</result>
+        </global-results>
+        <global-exception-mappings>
+            <exception-mapping result="sqlExcp" exception="java.sql.SQLException"></exception-mapping>
+        </global-exception-mappings>
+
+        <action name="login" class="org.example.action.UserAction" method="login">
+            <exception-mapping result="userExcp" exception="exception.UserException"></exception-mapping>
+            <result name="userExcp">/loginException.jsp</result>
+            <result name="success">/LoginSuc4.jsp</result>
+            <result name="fail">/Login4.jsp</result>
+            <result name="exception">/loginException.jsp</result>
+
+        </action>
+        <action name="allItems" class="org.example.action.ItemAction" method="getAllItems">
+            <result name="success">/itemList.jsp</result>
+            <result name="login">/Login4.jsp</result>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authority"/>
+        </action>
+
+        <action name="doAction" class="org.example.action.DoAction">
+            <result name="success">LoginSuc.jsp</result>
+            <result name="input">Login.jsp</result>
+            <result name="error">error.jsp</result>
+        </action>
+
+        <action name="doLogin" class="org.example.action.DoAction" method="login">
+            <result name="success">/LoginSuc.jsp</result>
+            <result name="fail">/LoginFail.jsp</result>
+            <result name="input">/Login.jsp</result>
+        </action>
+
+        <action name="doRegist" class="org.example.action.DoAction" method="regist">
+            <result name="success">/RegistSuc.jsp</result>
+            <result name="fail">/RegistFail.jsp</result>
+            <result name="input">/Regist.jsp</result>
+        </action>
+
+
+        <action name="doRegister" class="org.example.action.DoRegister">
+            <result name="success">/index.jsp</result>
+            <result name="input">/register_validation.jsp</result>
+        </action>
+    </package>
+
+
+</struts>

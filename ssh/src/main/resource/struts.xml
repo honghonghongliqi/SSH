@@ -1,7 +1,170 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 
+    <package name="book" extends="struts-default">
 
+
+        <!--管理员模块-->
+
+        <!-- 登陆 -->
+        <action name="loginAction" class="com.study.adminAction.LoginAction">
+            <result name="SAdmin">/success/SAdmin.jsp</result>
+            <result name="input">/login/login.jsp</result>
+            <result name="error">/login/login.jsp</result>
+        </action>
+
+
+        <!-- 添加管理员?-->
+        <action name="AddAdminAction1" class="com.study.adminAction.AddAdminAction">
+            <result name="success" type="redirect">LookMessageAction1</result>
+            <result name="input">/superAdmin/admin/addAdmin.jsp</result>
+            <result name="error">/superAdmin/admin/addAdmin.jsp</result>
+        </action>
+
+        <!-- 查看管理员信息-->
+        <action name="LookMessageAction1" class="com.study.adminAction.LookMessageAction">
+            <result name="success">/superAdmin/admin/showAdmin.jsp</result>
+            <result name="input">/success/SAdmin.jsp</result>
+        </action>
+
+        <!-- 修改管理员信息-->
+        <action name="UpdateMessageAction1" class="com.study.adminAction.UpdateMessageAction">
+            <result name="success" type="redirect">LookMessageAction1</result>
+            <result name="input">/success/SAdmin.jsp</result>
+        </action>
+
+        <!-- 删除管理员信息-->
+        <action name="DeleteMessageAction1" class="com.study.adminAction.DeleteMessageAction">
+            <result name="success" type="redirect">LookMessageAction1</result>
+            <result name="input">/success/SAdmin.jsp</result>
+        </action>
+
+
+        <!-- 管理员查看用户 -->
+        <action name="LookPeopleAction1" class="com.study.peopleAction.LookpeopleAction">
+            <result name="success">/superAdmin/people1/showPeople.jsp</result>
+            <result name="input">/success/SAdmin.jsp</result>
+        </action>
+
+
+        <!-- 删除用户 -->
+        <action name="DeletePeopleAction1" class="com.study.peopleAction.DeletepeopleAction">
+            <result name="success" type="redirect">LookPeopleAction1</result>
+            <result name="input">/success/SAdmin.jsp</result>
+        </action>
+
+
+        <!-- 修改用户 -->
+        <action name="updatepeopleAction1" class="com.study.peopleAction.UpdatepeopleAction">
+            <result name="success" type="redirect">LookPeopleAction1</result>
+            <result name="input">/success/SAdmin.jsp</result>
+        </action>
+
+
+        <!-- 增加图书 -->
+        <action name="AddbookAction1" class="com.study.bookAction.AddbookAction">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">10000000</param>
+                <param name="allowedTypes">img/gif,image/png,image/jpeg,image/jpg,image/pjpeg</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+            <param name="savePath">./save</param>
+
+            <result name="success" type="redirect">LookBookAction1</result>
+            <result name="input">/success/SAdmin.jsp</result>
+        </action>
+
+
+        <!-- 管理员查看图书 -->
+        <action name="LookBookAction1" class="com.study.bookAction.LookbookAction">
+            <result name="success">superAdmin/book1/showBook.jsp</result>
+            <result name="input">/success/SAdmin.jsp</result>
+        </action>
+
+
+        <!-- 修改图书信息 -->
+        <action name="UpdatepeopleAction1" class="com.study.bookAction.UpdatebookAction">
+            <result name="success" type="redirect">LookBookAction1</result>
+            <result name="input">/success/SAdmin.jsp</result>
+        </action>
+
+
+        <!-- 删除图书 -->
+        <action name="DeleteBookAction1" class="com.study.bookAction.DeletebookAction">
+            <result name="success" type="redirect">LookBookAction1</result>
+            <result name="input">/success/SAdmin.jsp</result>
+        </action>
+
+
+        <!-- 管理员查看借阅记录 -->
+        <action name="LookRecordAction1" class="com.study.borrowAndReturnAction.LookrecordAction">
+            <result name="success">superAdmin/borrowreturn1/showRecord.jsp</result>
+            <result name="input">/success/SAdmin.jsp</result>
+        </action>
+
+
+        <!--用户模块-->
+
+
+
+        <!-- 登陆 -->
+        <action name="loginAction1" class="com.study.peopleAction.LoginAtion">
+            <result name="success">/success/success.jsp</result>
+            <result name="register">/user/login/register.jsp</result>
+            <result name="fail">/user/login/login.jsp</result>
+        </action>
+
+
+        <!--注册-->
+        <action name="register" class="com.study.peopleAction.AddpeopleAction">
+            <result name="success">/success/success.jsp</result>
+            <result name="register">/user/login/register.jsp</result>
+            <result name="fail">/user//login/login.jsp</result>
+        </action>
+
+
+        <!--查看个人信息-->
+        <action name="LookPeopleAction" class="com.study.peopleAction.LookUserAction">
+            <result name="success">/user/login/showPeople.jsp</result>
+            <result name="fail">/user/login/login.jsp</result>
+        </action>
+
+        <!-- 修改用户 -->
+        <action name="updatepeopleAction" class="com.study.peopleAction.UpdatepeopleAction">
+            <result name="success">/success/success.jsp</result>
+            <result name="input">/success/success.jsp</result>
+        </action>
+
+
+        <!-- 用户查看借阅记录 -->
+        <action name="LookRecordAction" class="com.study.borrowAndReturnAction.UserLookrecordAction">
+            <result name="success">/user/borrowreturn/showRecord.jsp</result>
+            <result name="fail">/user/login/login.jsp</result>
+        </action>
+
+
+        <!-- 还书 -->
+        <action name="ReturnAction" class="com.study.borrowAndReturnAction.Return">
+            <result name="success" type="chain">LookBookAction</result>
+            <result name="input">/success/success.jsp</result>
+        </action>
+
+
+        <!-- 查看图书 -->
+        <action name="LookBookAction" class="com.study.bookAction.LookbookAction">
+            <result name="success">/user/book/showBook.jsp</result>
+            <result name="input">/success/success.jsp</result>
+        </action>
+
+
+        <!-- 借书 -->
+        <action name="BorrowAction" class="com.study.borrowAndReturnAction.Borrow">
+            <result name="success" type="chain">LookBookAction</result>
+            <result name="input">/success/success.jsp</result>
+        </action>
+
+    </package>
 
 </struts>
